@@ -44,6 +44,9 @@ Rails.application.routes.draw do
 
   resources :user_videos, only:[:create, :destroy]
 
+  #Mailers
+  post '/notifications' => 'notifications#create'
+
   #GITHUBAPI
   get 'auth/github', :as => 'github_login'
   get '/auth/github/callback', to: 'github#create'
