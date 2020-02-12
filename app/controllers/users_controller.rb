@@ -7,12 +7,16 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create(user_params)
-    if user.save
-      session[:user_id] = user.id
+    @user = User.create(user_params)
+    if @user.save
+      session[:user_id] = @user.id
+      # UserMailer.signup_confirmation(current_user).deliver
+      AccountNotifierMailer.inform(@user, @user.email).deliver_now
+
       redirect_to dashboard_path
     else
-      flash[:error] = 'Username already exists'
+      # flash[:error] = 'Username already exists'
+      flash[:error] = @user.errors.full_messages.to_sentence
       render :new
     end
   end
