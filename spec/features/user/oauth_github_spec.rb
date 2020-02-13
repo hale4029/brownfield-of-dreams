@@ -19,6 +19,7 @@ describe 'connect to github using omniauth' do
                                                                   'credentials' => { 'token' => (ENV['GITHUB_ACCESS_TOKEN']).to_s, 'expires' => false })
 
       visit '/dashboard'
+
       expect(page).to_not have_content('Github Repos')
       expect(page).to_not have_css('#repos')
       expect(page).to_not have_content('Github Following')
